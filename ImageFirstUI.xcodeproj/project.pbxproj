@@ -11,6 +11,13 @@
 		60A1EF65259E34710079C077 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF64259E34710079C077 /* ContentView.swift */; };
 		60A1EF67259E34750079C077 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A1EF66259E34750079C077 /* Assets.xcassets */; };
 		60A1EF6A259E34750079C077 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A1EF69259E34750079C077 /* Preview Assets.xcassets */; };
+		60A1EF74259E34950079C077 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF73259E34950079C077 /* DataModel.swift */; };
+		60A1EF77259E37E30079C077 /* DispImgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF76259E37E30079C077 /* DispImgList.swift */; };
+		60C57CF325A230AD00C5DA58 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C57CF225A230AD00C5DA58 /* OSLog.swift */; };
+		60C57CF625A239C300C5DA58 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C57CF525A239C300C5DA58 /* FileManager.swift */; };
+		60D3072825A09A4500890F78 /* imageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D3072725A09A4500890F78 /* imageLoader.swift */; };
+		60D3072B25A0ABFD00890F78 /* ThumbnailImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D3072A25A0ABFD00890F78 /* ThumbnailImg.swift */; };
+		60D3072E25A0D37F00890F78 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D3072D25A0D37F00890F78 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +28,13 @@
 		60A1EF69259E34750079C077 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		60A1EF6B259E34750079C077 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60A1EF6C259E34750079C077 /* ImageFirstUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageFirstUI.entitlements; sourceTree = "<group>"; };
+		60A1EF73259E34950079C077 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		60A1EF76259E37E30079C077 /* DispImgList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispImgList.swift; sourceTree = "<group>"; };
+		60C57CF225A230AD00C5DA58 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		60C57CF525A239C300C5DA58 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		60D3072725A09A4500890F78 /* imageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageLoader.swift; sourceTree = "<group>"; };
+		60D3072A25A0ABFD00890F78 /* ThumbnailImg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailImg.swift; sourceTree = "<group>"; };
+		60D3072D25A0D37F00890F78 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +48,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6023469C25A226E900AA4802 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				60A1EF76259E37E30079C077 /* DispImgList.swift */,
+				60D3072A25A0ABFD00890F78 /* ThumbnailImg.swift */,
+				60A1EF64259E34710079C077 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6023469E25A2272F00AA4802 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				60A1EF73259E34950079C077 /* DataModel.swift */,
+				60D3072725A09A4500890F78 /* imageLoader.swift */,
+				60D3072D25A0D37F00890F78 /* ImageCache.swift */,
+				60C57CF525A239C300C5DA58 /* FileManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		60A1EF56259E34710079C077 = {
 			isa = PBXGroup;
 			children = (
@@ -53,12 +88,14 @@
 		60A1EF61259E34710079C077 /* ImageFirstUI */ = {
 			isa = PBXGroup;
 			children = (
+				6023469E25A2272F00AA4802 /* Model */,
+				6023469C25A226E900AA4802 /* View */,
 				60A1EF62259E34710079C077 /* ImageFirstUIApp.swift */,
-				60A1EF64259E34710079C077 /* ContentView.swift */,
 				60A1EF66259E34750079C077 /* Assets.xcassets */,
 				60A1EF6B259E34750079C077 /* Info.plist */,
 				60A1EF6C259E34750079C077 /* ImageFirstUI.entitlements */,
 				60A1EF68259E34750079C077 /* Preview Content */,
+				60C57CF225A230AD00C5DA58 /* OSLog.swift */,
 			);
 			path = ImageFirstUI;
 			sourceTree = "<group>";
@@ -141,7 +178,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				60A1EF65259E34710079C077 /* ContentView.swift in Sources */,
+				60A1EF77259E37E30079C077 /* DispImgList.swift in Sources */,
+				60C57CF325A230AD00C5DA58 /* OSLog.swift in Sources */,
+				60D3072825A09A4500890F78 /* imageLoader.swift in Sources */,
 				60A1EF63259E34710079C077 /* ImageFirstUIApp.swift in Sources */,
+				60D3072B25A0ABFD00890F78 /* ThumbnailImg.swift in Sources */,
+				60C57CF625A239C300C5DA58 /* FileManager.swift in Sources */,
+				60D3072E25A0D37F00890F78 /* ImageCache.swift in Sources */,
+				60A1EF74259E34950079C077 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +313,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImageFirstUI/ImageFirstUI.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ImageFirstUI/Preview Content\"";
@@ -293,6 +338,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ImageFirstUI/ImageFirstUI.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ImageFirstUI/Preview Content\"";
