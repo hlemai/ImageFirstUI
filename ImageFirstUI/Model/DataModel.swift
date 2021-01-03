@@ -17,7 +17,7 @@ struct DispImg: Hashable, Codable, Identifiable {
 
 
 final class ModelData: ObservableObject {
-    @Published var rep = "/Users/hlemai/Pictures/Fond/"
+    @Published var directory = "/Users/hlemai/Pictures/Fond/"
     //@Published var rep = "/Users/hlemai/Pictures/orig/"
     //@Published var rep = "/Volumes/data-sd/Pictures/orig/"
     
@@ -41,15 +41,19 @@ final class ModelData: ObservableObject {
         let fm = FileManager.default
         do {
             //let  files = try fm.contentsOfDirectory(atPath: self.rep)
-            let files = try fm.getListOfImage(from: URL(fileURLWithPath: self.rep))
+            let files = try fm.getListOfImage(from: URL(fileURLWithPath: self.directory))
             images.removeAll()
             for file in files.prefix(1000) {
                 images.append(DispImg(id:file.lastPathComponent,name:file.lastPathComponent,description: ""))
             }
         }
         catch {
-            print("Error reading \(self.rep)")
+            print("Error reading \(self.directory)")
         }
+    }
+    public func changeDirectory(_ directory:String) {
+        self.directory=directory
+        LoadImages()
     }
     
 

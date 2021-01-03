@@ -9,12 +9,51 @@ import SwiftUI
 import os.log
 
 struct ContentView: View {
+    @EnvironmentObject var modelData: ModelData
+    func ChangeDirectory() {
+        let dialog = NSOpenPanel();
+
+        dialog.title                   = "Choose a Directory containing Pictures| Raw or jpeg";
+        dialog.showsResizeIndicator    = true;
+        dialog.showsHiddenFiles        = false;
+        dialog.allowsMultipleSelection = false;
+        dialog.canChooseDirectories = true;
+        dialog.canChooseFiles=false;
+
+        if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
+            let result = dialog.url // Pathname of the file
+
+            if (result != nil) {
+                let path: String = result!.path
+                
+                // path contains the file directory e.g
+                modelData.changeDirectory(path+"/")
+            }
+            
+        } else {
+            // User clicked on "Cancel"
+            return
+        }
+        
+    }
+    func Clear() {
+        modelData.directory=""
+        modelData.images.removeAll()
+    }
     var body: some View {
         VStack {
-            Text("Hello, pictures!")
+            Text("Pictures from \(modelData.directory)")
                 .padding()
             DispImgList()
-        }
+        }.toolbar(content: {
+            Button(action:ChangeDirectory) {
+                Label("Change Directory",systemImage:"folder")
+                Text("Change Directory")
+            }
+            Button(action:Clear) {
+                Label("Clear",systemImage:"clear")
+            }
+        })
     }
 }
 
