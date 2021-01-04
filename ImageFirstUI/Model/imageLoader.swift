@@ -14,6 +14,9 @@ public class ImageLoader: ObservableObject
     private var imagePath: String
     private var imgCache = ImageCache.getImageCache()
     
+    public var dispatchQueue = DispatchQueue.main
+    
+    
     public private(set) var image: NSImage?
     {
         willSet
@@ -51,7 +54,7 @@ public class ImageLoader: ObservableObject
             return NSImage(cgImage: downsampledImage,size: NSSize(width: pointSize.width, height: pointSize.height))
     }
     
-    func loadImageFromDiskWith(fileName: String) -> NSImage? {
+    private func loadImageFromDiskWith(fileName: String) -> NSImage? {
         let path = fileName;
         let size = CGSize(width: 100.0, height: 100.0)
         os_log("try to load : %@ ", log: OSLog.imageLoad ,type: .debug,path)
@@ -77,18 +80,18 @@ public class ImageLoader: ObservableObject
                 [weak self] in
                     guard let self = self else { return }
                     let img = self.loadImageFromDiskWith(fileName: self.imagePath)
-                DispatchQueue.main.async {
-                    self.image=img
-                    if img != nil {
-                        self.imgCache.set(forKey: self.imagePath, image: img!)
-                        os_log("push real image in cache ", log: OSLog.imageLoad ,type: .debug)
+                    self.dispatchQueue.sync {
+                        self.image=img
+                        if img != nil {
+                            self.imgCache.set(forKey: self.imagePath, image: img!)
+                            os_log("push real image in cache ", log: OSLog.imageLoad ,type: .debug)
+                        }
                     }
-                }
             }
         }
     }
     
-    func loadImageFromCache() -> Bool {
+    private func loadImageFromCache() -> Bool {
             guard let cacheImage = imgCache.get(forKey: imagePath) else {
                 return false
             }

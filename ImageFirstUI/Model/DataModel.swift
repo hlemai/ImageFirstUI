@@ -47,7 +47,7 @@ final class ModelData: ObservableObject {
             //let  files = try fm.contentsOfDirectory(atPath: self.rep)
             let files = try fm.getListOfImage(from: URL(fileURLWithPath: self.directory))
             images.removeAll()
-            for file in files.prefix(1000) {
+            for file in files {
                 images.append(DispImg(id:file.lastPathComponent,name:file.lastPathComponent,description: ""))
             }
         }

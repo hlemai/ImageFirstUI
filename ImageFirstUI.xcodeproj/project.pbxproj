@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6015B20A25A3564500FDBF5C /* ImageFirstUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6015B20925A3564500FDBF5C /* ImageFirstUITests.swift */; };
 		60A1EF63259E34710079C077 /* ImageFirstUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF62259E34710079C077 /* ImageFirstUIApp.swift */; };
 		60A1EF65259E34710079C077 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF64259E34710079C077 /* ContentView.swift */; };
 		60A1EF67259E34750079C077 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A1EF66259E34750079C077 /* Assets.xcassets */; };
@@ -21,7 +22,20 @@
 		60D3072E25A0D37F00890F78 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D3072D25A0D37F00890F78 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6015B20C25A3564500FDBF5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60A1EF57259E34710079C077 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 60A1EF5E259E34710079C077;
+			remoteInfo = ImageFirstUI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6015B20725A3564500FDBF5C /* ImageFirstUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFirstUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6015B20925A3564500FDBF5C /* ImageFirstUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFirstUITests.swift; sourceTree = "<group>"; };
+		6015B20B25A3564500FDBF5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60A1EF5F259E34710079C077 /* ImageFirstUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFirstUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60A1EF62259E34710079C077 /* ImageFirstUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFirstUIApp.swift; sourceTree = "<group>"; };
 		60A1EF64259E34710079C077 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -40,6 +54,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6015B20425A3564500FDBF5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60A1EF5C259E34710079C077 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,6 +71,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6015B20825A3564500FDBF5C /* ImageFirstUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6015B20925A3564500FDBF5C /* ImageFirstUITests.swift */,
+				6015B20B25A3564500FDBF5C /* Info.plist */,
+			);
+			path = ImageFirstUITests;
+			sourceTree = "<group>";
+		};
 		6023469C25A226E900AA4802 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +106,7 @@
 			children = (
 				60C57CF825A252D300C5DA58 /* README.md */,
 				60A1EF61259E34710079C077 /* ImageFirstUI */,
+				6015B20825A3564500FDBF5C /* ImageFirstUITests */,
 				60A1EF60259E34710079C077 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				60A1EF5F259E34710079C077 /* ImageFirstUI.app */,
+				6015B20725A3564500FDBF5C /* ImageFirstUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,6 +146,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6015B20625A3564500FDBF5C /* ImageFirstUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6015B20E25A3564500FDBF5C /* Build configuration list for PBXNativeTarget "ImageFirstUITests" */;
+			buildPhases = (
+				6015B20325A3564500FDBF5C /* Sources */,
+				6015B20425A3564500FDBF5C /* Frameworks */,
+				6015B20525A3564500FDBF5C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6015B20D25A3564500FDBF5C /* PBXTargetDependency */,
+			);
+			name = ImageFirstUITests;
+			productName = ImageFirstUITests;
+			productReference = 6015B20725A3564500FDBF5C /* ImageFirstUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		60A1EF5E259E34710079C077 /* ImageFirstUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 60A1EF6F259E34750079C077 /* Build configuration list for PBXNativeTarget "ImageFirstUI" */;
@@ -140,6 +190,10 @@
 				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
+					6015B20625A3564500FDBF5C = {
+						CreatedOnToolsVersion = 12.3;
+						TestTargetID = 60A1EF5E259E34710079C077;
+					};
 					60A1EF5E259E34710079C077 = {
 						CreatedOnToolsVersion = 12.3;
 					};
@@ -159,11 +213,19 @@
 			projectRoot = "";
 			targets = (
 				60A1EF5E259E34710079C077 /* ImageFirstUI */,
+				6015B20625A3564500FDBF5C /* ImageFirstUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6015B20525A3564500FDBF5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60A1EF5D259E34710079C077 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -177,6 +239,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6015B20325A3564500FDBF5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6015B20A25A3564500FDBF5C /* ImageFirstUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60A1EF5B259E34710079C077 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,7 +265,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6015B20D25A3564500FDBF5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 60A1EF5E259E34710079C077 /* ImageFirstUI */;
+			targetProxy = 6015B20C25A3564500FDBF5C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		6015B20F25A3564500FDBF5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5F8U78J3C3;
+				INFOPLIST_FILE = ImageFirstUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = LEMAI.ImageFirstUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageFirstUI.app/Contents/MacOS/ImageFirstUI";
+			};
+			name = Debug;
+		};
+		6015B21025A3564500FDBF5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5F8U78J3C3;
+				INFOPLIST_FILE = ImageFirstUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = LEMAI.ImageFirstUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageFirstUI.app/Contents/MacOS/ImageFirstUI";
+			};
+			name = Release;
+		};
 		60A1EF6D259E34750079C077 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -364,6 +482,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6015B20E25A3564500FDBF5C /* Build configuration list for PBXNativeTarget "ImageFirstUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6015B20F25A3564500FDBF5C /* Debug */,
+				6015B21025A3564500FDBF5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		60A1EF5A259E34710079C077 /* Build configuration list for PBXProject "ImageFirstUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
