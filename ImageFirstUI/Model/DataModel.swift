@@ -29,12 +29,16 @@ final class ModelData: ObservableObject {
     
     
     init() {
-        LoadImages()
+        internalInit()
     }
     init( mockup:Bool) {
         if(!mockup) {
-            LoadImages()
+            internalInit()
         }
+    }
+    private func internalInit() {
+        directory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Pictures", isDirectory: true).path + "/"
+        LoadImages()
     }
     
     public func LoadImages() {
