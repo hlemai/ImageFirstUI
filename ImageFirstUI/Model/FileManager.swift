@@ -35,28 +35,7 @@ extension FileManager {
         }
     }
     
-    func createPathURL(by id: String) -> URL? {
-        guard let localDirectory = try? FileManager.default.url(for: .documentDirectory , in: .userDomainMask , appropriateFor: nil, create: true) else { return nil }
-        let url = localDirectory.appendingPathComponent(id)
-        if !FileManager.default.fileExists(atPath: url.path) {
-            try? FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: true, attributes: nil)
-        }
-        return url
-    }
-    
-    func writeFile(from url: URL, id: String) -> URL? {
-        guard let localDirectory = createPathURL(by: id) else { return nil }
-        let finalName = String(Date().timeIntervalSince1970) + "_" + url.lastPathComponent
-        let finalPath = localDirectory.appendingPathComponent(finalName)
-        do {
-            let data = try Data(contentsOf: url)
-            try data.write(to: finalPath)
-            return finalPath
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
-    }
+ 
     
     func thumbnail(from url: URL, placeholder: NSImage? = nil) -> NSImage? {
         do {
