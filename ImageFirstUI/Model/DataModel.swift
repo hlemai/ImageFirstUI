@@ -9,23 +9,26 @@ import Foundation
 import SwiftUI
 
 struct DispImg: Hashable, Codable, Identifiable {
-    var id : String
+    var id : UUID = UUID()
     var name: String
-    var description: String
+    var path :String
     var isFavorite = false
 }
 
 
 final class ModelData: ObservableObject {
     @Published var directory = "/Users/hlemai/Pictures/Fond/"
-    //@Published var rep = "/Users/hlemai/Pictures/orig/"
-    //@Published var rep = "/Volumes/data-sd/Pictures/orig/"
+    @Published var includeSubDirectory:Bool = false {
+        didSet {
+            changeDirectory(self.directory)
+        }
+    }
     
     
     @Published var images: [DispImg] = [
-        DispImg(id: "_DSC5171",name:"_DSC5171.jpg",description: "lanbscape from Mont Des Cats"),
-        DispImg(id: "_DSF1494",name:"_DSF1494.jpg",description: "Photo camera"),
-        DispImg(id: "DSC02438",name:"DSC02438.jpg",description: "san francisco display")]
+        DispImg(name:"_DSC5171.jpg",path: "/Users/hlemai/Pictures/fond/_DSC5171.jpg"),
+        DispImg(name:"_DSF1494.jpg",path: "/Users/hlemai/Pictures/fond/_DSF1494.jpg"),
+        DispImg(name:"DSC02438.jpg",path: "/Users/hlemai/Pictures/fond/DSC02438.jpg")]
     
     
     init() {
@@ -45,10 +48,10 @@ final class ModelData: ObservableObject {
         let fm = FileManager.default
         do {
             //let  files = try fm.contentsOfDirectory(atPath: self.rep)
-            let files = try fm.getListOfImage(from: URL(fileURLWithPath: self.directory))
+            let files = try fm.getListOfImage(from: URL(fileURLWithPath: self.directory),includesubDirectory: self.includeSubDirectory)
             images.removeAll()
             for file in files {
-                images.append(DispImg(id:file.lastPathComponent,name:file.lastPathComponent,description: ""))
+                images.append(DispImg(name:file.lastPathComponent,path: file.path))
             }
         }
         catch {

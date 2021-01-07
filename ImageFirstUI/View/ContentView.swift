@@ -46,6 +46,9 @@ struct ContentView: View {
                 .padding()
             DispImgList()
         }.toolbar(content: {
+            Toggle(isOn: $modelData.includeSubDirectory, label: {
+                Text("Include sub directory")
+            }).toggleStyle(CheckboxToggleStyle())
             Button(action:ChangeDirectory) {
                 Label("Change Directory",systemImage:"folder")
                 Text("Change Directory")

@@ -24,14 +24,26 @@ extension FileManager {
         }
     }*/
     
-    func  getListOfImage(from url: URL) throws -> [URL] {
+    func  getListOfImage(from url: URL,includesubDirectory: Bool ) throws -> [URL] {
         do {
-            let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-            let img = try directoryContents.filter { (url) -> Bool in
-                let ids = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey]).typeIdentifier
-                return UTTypeConformsTo(ids! as CFString, kUTTypeImage)
+            
+            var options:DirectoryEnumerationOptions
+            if includesubDirectory {
+                options = [.skipsHiddenFiles,.skipsPackageDescendants]
             }
-            return img
+            else {
+                options = [.skipsHiddenFiles,.skipsSubdirectoryDescendants]
+            }
+            //let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: options)
+            let directoryContents =  FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: options,errorHandler: nil)
+            let img = try directoryContents?.filter { (it) -> Bool in
+                let url = it as? URL
+                let ids = try url?.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey]).typeIdentifier
+                return UTTypeConformsTo(ids! as CFString, kUTTypeImage)
+            }.map {
+                return ($0 as! URL)
+            }
+            return img!
         }
     }
     

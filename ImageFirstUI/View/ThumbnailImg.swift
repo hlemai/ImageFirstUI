@@ -17,14 +17,14 @@ struct ThumbnailImg: View {
             imageLoader.requestImage()
         }).scaledToFill()
     }
-    init(directory:String, name:String )
+    init( path:String)
     {
-        imageLoader = ImageLoader(directory : directory, name: name)
+        imageLoader = ImageLoader(path: path)
     }
 }
 
 struct ThumbnailImg_Previews: PreviewProvider {
     static var previews: some View {
-        ThumbnailImg(directory:  "/Users/hlemai/Pictures/Fond/",name:"_DSC5171.jpg")
+        ThumbnailImg(path:  "/Users/hlemai/Pictures/Fond/_DSC5171.jpg")
     }
 }

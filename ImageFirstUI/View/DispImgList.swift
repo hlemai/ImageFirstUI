@@ -19,7 +19,7 @@ struct DispImgList: View {
             LazyVGrid(columns: columns,  spacing:20 ) {
                 ForEach(modelData.images) { img in
                     VStack {
-                        ThumbnailImg(directory: modelData.directory, name: img.name)
+                        ThumbnailImg(path : img.path)
                         Text(img.name)
                     }
                 }
