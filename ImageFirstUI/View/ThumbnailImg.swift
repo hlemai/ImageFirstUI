@@ -13,13 +13,14 @@ struct ThumbnailImg: View {
     var body: some View {
         Image(nsImage: imageLoader.image ?? NSImage(systemSymbolName: "tortoise", accessibilityDescription: "to load")!)
             .frame(width: 100.0, height: 100.0)
-            .onAppear( perform:{
-            imageLoader.requestImage()
-        }).scaledToFill()
+            /*.onAppear( perform:{
+            //imageLoader.requestImage()
+        }) */.scaledToFill()
     }
     init( path:String)
     {
         imageLoader = ImageLoader(path: path)
+        imageLoader.requestImage()
     }
 }
 

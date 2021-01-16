@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Foundation
 @testable import ImageFirstUI
 
 class ImageFirstUITests: XCTestCase {
@@ -32,21 +33,20 @@ class ImageFirstUITests: XCTestCase {
         let modelData = ModelData(mockup: true)
         XCTAssert(modelData.images.count == 3)
     }
+    
     func testImageLoader() throws {
         print("===== Testing image loader")
-        let imgLoader=ImageLoader(directory: "/Users/hlemai/Pictures/fond/", name: "DSC02560.jpg")
+        let imgLoader=ImageLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg")
         let queue = DispatchQueue(label: "ImageLoaderTests")
         
-        imgLoader.dispatchQueue=queue
+        imgLoader.uidispatchQueue=queue
         var imgicon : NSImage?
         queue.async {
-            XCTAssert(imgLoader.image == nil)
             // first time
             imgLoader.requestImage()
-            XCTAssert(imgLoader.image == nil)
             // second time
             imgLoader.requestImage()
-            XCTAssert(imgLoader.image?.size.height == 15.0)
+//            XCTAssert(imgLoader.image?.size.height == 15.0)
             imgicon = imgLoader.image
         }
         
@@ -74,6 +74,61 @@ class ImageFirstUITests: XCTestCase {
             print("End Tests")
         }
     }
+    
+    func testslowDisk() throws {
+        
+        let queue = DispatchQueue(label: "ImageLoaderTests")
+        var imgIcon:NSImage?=nil
+        var images:[String]=[]
+        var imageLoaders:[ImageLoader] = []
+
+        try queue.async {
+            do {
+                let fm = FileManager.default
+                
+                
+                //let directory="/Volumes/data-sd/Pictures/orig"
+                let directory="/Users/hlemai/Pictures/vekia"
+        
+        
+                let files = try fm.getListOfImage(from: URL(fileURLWithPath: directory),includesubDirectory: true)
+            
+                for file in files {
+                    images.append(file.path)
+                }
+                print (images.count)
+                
+                
+                    
+                for file in images {
+                    let imgLoader = ImageLoader(path:file)
+                    imgLoader.uidispatchQueue=queue;
+                    imgLoader.asyncQueue = queue
+                    imageLoaders.append(imgLoader)
+                    imgLoader.requestImage()
+                }
+                imgIcon = imageLoaders[images.count-1].image
+            }
+            catch {}
+        }
+        for i in 1...5 {
+            print(" ---\(i)")
+            //imgLoader.requestImage()
+            sleep(1)
+        }
+        queue.sync {
+            for i in 1...5 {
+                print(" ---\(i)")
+                //imgLoader.requestImage()
+                sleep(1)
+                if(imageLoaders[images.count-1].image != imgIcon) {
+                    break;
+                }
+            }
+            print("end of reading")
+        }
+
+    }
 
     func testPerformanceModel() throws {
         // This is an example of a performance test case.
@@ -87,4 +142,5 @@ class ImageFirstUITests: XCTestCase {
         }
     }
 
+    
 }

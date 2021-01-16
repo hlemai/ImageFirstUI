@@ -14,7 +14,8 @@ public class ImageLoader: ObservableObject
     private var imagePath: String
     private var imgCache = ImageCache.getImageCache()
     
-    public var dispatchQueue = DispatchQueue.main
+    public var uidispatchQueue = DispatchQueue.main
+    public var asyncQueue =  DispatchQueue.global(qos: .userInteractive)
     
     
     public private(set) var image: NSImage?
@@ -31,6 +32,9 @@ public class ImageLoader: ObservableObject
         self.imagePath = path
     }
 
+    
+     /// func downsample
+     ///
     private func downsample(imageAt imageURL: URL, to pointSize: CGSize, scale: CGFloat) -> NSImage? {
 
         let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
@@ -71,15 +75,17 @@ public class ImageLoader: ObservableObject
         if !loadImageFromCache() {
             os_log("not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,self.imagePath)
 
-            self.imgCache.set(forKey: self.imagePath, image: NSImage(systemSymbolName: "bonjour",accessibilityDescription: "")!)
+            let reading = NSImage(systemSymbolName: "arrow.3.trianglepath",accessibilityDescription: "loading")!
+            self.imgCache.set(forKey: self.imagePath, image: reading)
+            self.image=reading
             os_log("push temp image in cache ", log: OSLog.imageLoad ,type: .debug)
 
-            let queue = DispatchQueue.global(qos: .background)
+            let queue = asyncQueue
             queue.async{
                 [weak self] in
                     guard let self = self else { return }
                     let img = self.loadImageFromDiskWith(fileName: self.imagePath)
-                    self.dispatchQueue.async {
+                    self.uidispatchQueue.async {
                         if img != nil {
                             self.image=img
                             self.imgCache.set(forKey: self.imagePath, image: img!)
