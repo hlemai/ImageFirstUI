@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct ImageFirstUIApp: App {
-    @StateObject private var modelData = ModelData()
+    @StateObject private var modelData = ExplorerViewModel()
         
     var body: some Scene {
         WindowGroup {

@@ -2,4 +2,4 @@
 Test Swift UI to display image
 
 Display image of a single directory.
-Macos swiftui sample.
+Personal exploraton of MVVM, SwiftUI and others design principles.

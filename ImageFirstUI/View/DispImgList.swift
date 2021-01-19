@@ -6,31 +6,47 @@
 //
 
 import SwiftUI
-//import Foundation
 
 
+/// view displaying table of thumbnal pictures
 struct DispImgList: View {
-    @EnvironmentObject var modelData: ModelData
-
+    
+    @EnvironmentObject var dirVModel: ExplorerViewModel
+    let directory:String
+    
+    /// columns definitions
     let columns = [GridItem(.adaptive(minimum: 100.0, maximum: 300.0))]
     
+    
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns,  spacing:20 ) {
-                ForEach(modelData.images) { img in
-                    VStack {
-                        ThumbnailImg(path : img.path)
-                        Text(img.name)
+        VStack {
+            Text(self.directory)
+            Text(dirVModel.currentDirectory)
+            ScrollView {
+                LazyVGrid(columns: columns,  spacing:20 ) {
+                    ForEach(dirVModel.images) { img in
+                        VStack {
+                            ThumbnailImg(path : img.path)
+                            Text(img.name)
+                        }
                     }
                 }
             }
-        }
+        }.onAppear(perform: {
+            dirVModel.changeDirectory(self.directory)
+        })
+    }
+    
+    init(directory: String) {
+        self.directory=directory
+        //dirVModel.changeDirectory(self.directory)
     }
 }
 
 struct DispImgList_Previews: PreviewProvider {
     static var previews: some View {
-        DispImgList().environmentObject(ModelData(mockup: true))
+        DispImgList(directory:"/Users/hlemai/Pictures/Fond")
+            .environmentObject(ExplorerViewModel(mockup: true))
         
     }
 }

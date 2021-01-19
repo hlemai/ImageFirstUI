@@ -7,19 +7,20 @@
 
 import SwiftUI
 
+/// view displaying an image
 struct ThumbnailImg: View {
-    @ObservedObject private var imageLoader: ImageLoader
+    @ObservedObject private var imageLoader: ImageThumbnailLoader
     
     var body: some View {
         Image(nsImage: imageLoader.image ?? NSImage(systemSymbolName: "tortoise", accessibilityDescription: "to load")!)
-            .frame(width: 100.0, height: 100.0)
-            /*.onAppear( perform:{
-            //imageLoader.requestImage()
-        }) */.scaledToFill()
+            //.frame(width: 100.0, height: 100.0)
+            .scaledToFill().onAppear(perform: {
+                //imageLoader.requestImage()
+            })
     }
     init( path:String)
     {
-        imageLoader = ImageLoader(path: path)
+        imageLoader = ImageThumbnailLoader(path: path)
         imageLoader.requestImage()
     }
 }

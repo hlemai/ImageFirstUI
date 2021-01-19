@@ -23,10 +23,12 @@ extension FileManager {
             return []
         }
     }*/
-    
-    func  getListOfImage(from url: URL,includesubDirectory: Bool ) throws -> [URL] {
+    /// Get list of files filtered on image
+    /// parameters :
+    ///     - from : url of the folder containing pictures
+    ///     - includesubDirectory : recurse find directories
+    func getListOfImage(from url: URL,includesubDirectory: Bool ) throws -> [URL] {
         do {
-            
             var options:DirectoryEnumerationOptions
             if includesubDirectory {
                 options = [.skipsHiddenFiles,.skipsPackageDescendants]
@@ -34,7 +36,7 @@ extension FileManager {
             else {
                 options = [.skipsHiddenFiles,.skipsSubdirectoryDescendants]
             }
-            //let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: options)
+            
             let directoryContents =  FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: options,errorHandler: nil)
             let img = try directoryContents?.filter { (it) -> Bool in
                 let url = it as? URL
@@ -47,8 +49,12 @@ extension FileManager {
         }
     }
     
- 
+    func getListSubDirectories(from url: URL) throws -> [URL] {
+        let subDirs = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsSubdirectoryDescendants,.skipsHiddenFiles,.skipsPackageDescendants]).filter {url in return url.hasDirectoryPath}
+        return subDirs
+    }
     
+
     func thumbnail(from url: URL, placeholder: NSImage? = nil) -> NSImage? {
         do {
             let thumbnailDictionary = try url.promisedItemResourceValues(forKeys: [URLResourceKey.thumbnailDictionaryKey]).thumbnailDictionary
