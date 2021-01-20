@@ -15,35 +15,40 @@ struct ContentView: View {
         dirVModel.uiChangeDirectory()
     }
     func refresh() {
+        dirVModel.changeDirectory(dirVModel.currentDirectory)
     }
     
     var body: some View {
         NavigationView {
+            
             List {
+                /*
                     Section(header: Text("Favorites")) {
                         ForEach (dirVModel.directories,id: \.id) {  dir in
                             NavigationLink(
-                                destination: DispImgList(directory: dir.path),
+                                destination: DispImgList(),
                                 label: {
-                                    Label(dir.name,systemImage:"star").tag(dir.id)
+                                    Label(dir.name,systemImage:"star")
                                 })
                         }
-                    }
+                    }*/
                     Section(header: Text("Subfolders")) {
                         ForEach( dirVModel.subDirectories,id:\.id) { dir in
-                            Button (action: {dirVModel.changeDirectory(dir.path)},
+                            Button (action: {
+                                dirVModel.changeDirectory(dir.path)
+                            },
                                 label: {
-                                    Label(dir.name,systemImage:"folder").tag(dir.id)
+                                    Label(dir.name,systemImage:"folder")
                                 })
 
                         }
                     }
             }
-            DispImgList(directory:dirVModel.currentDirectory)
+            DispImgList()
         }.navigationTitle(dirVModel.title)
         .navigationSubtitle(dirVModel.currentDirectory).toolbar(content: {
-            Toggle(isOn: $dirVModel.includeSubDirectory, label: {
-                Text("Include sub directory")
+                Toggle(isOn: $dirVModel.includeSubDirectory, label: {
+                    Text("Include sub directory")
             }).toggleStyle(CheckboxToggleStyle())
             Button(action:changeDirectory) {
                 Label("Change Directory",systemImage:"folder")
@@ -59,6 +64,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ExplorerViewModel(mockup:true))
+        ContentView().environmentObject(ExplorerViewModel(mockup:true)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
     }
 }

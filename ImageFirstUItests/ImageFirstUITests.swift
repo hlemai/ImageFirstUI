@@ -30,13 +30,13 @@ class ImageFirstUITests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         print("===== Testing Model")
-        let modelData = ModelData(mockup: true)
+        let modelData = ExplorerViewModel(mockup: true)
         XCTAssert(modelData.images.count == 3)
     }
     
     func testImageLoader() throws {
         print("===== Testing image loader")
-        let imgLoader=ImageLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg")
+        let imgLoader=ImageThumbnailLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg")
         let queue = DispatchQueue(label: "ImageLoaderTests")
         
         imgLoader.uidispatchQueue=queue
@@ -80,9 +80,9 @@ class ImageFirstUITests: XCTestCase {
         let queue = DispatchQueue(label: "ImageLoaderTests")
         var imgIcon:NSImage?=nil
         var images:[String]=[]
-        var imageLoaders:[ImageLoader] = []
+        var imageLoaders: [ImageThumbnailLoader] = []
 
-        try queue.async {
+         queue.async {
             do {
                 let fm = FileManager.default
                 
@@ -101,7 +101,7 @@ class ImageFirstUITests: XCTestCase {
                 
                     
                 for file in images {
-                    let imgLoader = ImageLoader(path:file)
+                    let imgLoader = ImageThumbnailLoader(path:file)
                     imgLoader.uidispatchQueue=queue;
                     imgLoader.asyncQueue = queue
                     imageLoaders.append(imgLoader)
@@ -133,7 +133,7 @@ class ImageFirstUITests: XCTestCase {
     func testPerformanceModel() throws {
         // This is an example of a performance test case.
         print("===== Testing image loader")
-        let  modelData = ModelData(mockup: true)
+        let  modelData = ExplorerViewModel(mockup: true)
         measure {
             // Put the code you want to measure the time of here.
             modelData.changeDirectory("/Users/hlemai/Pictures/Fond/")

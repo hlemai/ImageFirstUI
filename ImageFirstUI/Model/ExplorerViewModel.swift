@@ -30,15 +30,7 @@ final class ExplorerViewModel: ObservableObject {
     /// Title of the window
     @Published var title = "Pictures"
     /// directory containing images to display
-    @Published var currentDirectory = "/Users/hlemai/Pictures/" {
-        willSet {
-            os_log(" willset currentDirectory to %@",log:OSLog.imageLoad ,type:.debug,newValue)
-            if newValue != currentDirectory {
-                subDirectories.removeAll()
-                images.removeAll()
-            }
-        }
-    }
+    @Published var currentDirectory = "/Users/hlemai/Pictures/" 
     
     /// Force recurse explotation of currect directory
     @Published var includeSubDirectory:Bool = false {
@@ -68,9 +60,12 @@ final class ExplorerViewModel: ObservableObject {
         else {
             directories = [DirectoryViewModel(name: "Root", path: "/Users/hlemai/Pictures/Fond/")]
             subDirectories = [DirectoryViewModel(name: "Sub 1", path: "/Users/hlemai/Pictures/Fond/"),DirectoryViewModel(name: "Sub 2", path: "/Users/hlemai/Pictures/Fond/")]
-            images = [PictureViewModel(name: "Image 1", path: "/Users/hlemai/Pictures/Fond/IMG_0186.jpg"),PictureViewModel(name: "Image 2", path: "/Users/hlemai/Pictures/Fond/IMG_0186.jpg")]
+            images = [PictureViewModel(name: "Image 1", path: "/Users/hlemai/Pictures/Fond/IMG_0186.jpg"),
+                      PictureViewModel(name: "Image 2", path: "/Users/hlemai/Pictures/Fond/IMG_0186.jpg"),
+                      PictureViewModel(name: "Image 3", path: "/Users/hlemai/Pictures/Fond/IMG_0186.jpg")]
         }
     }
+    
     /// internal init
     private func internalInit() {
         currentDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Pictures", isDirectory: true).path + "/"
@@ -129,9 +124,7 @@ final class ExplorerViewModel: ObservableObject {
                 images.append(PictureViewModel(name:file.lastPathComponent,path: file.path))
             }
             
-            os_log(" -> %d subdirectories %d images", log: OSLog.imageLoad,type: .info,self.subDirectories.count,self.images.count)
-            //os_log("%@ subs images in dir ", log: OSLog.imageLoad ,type: .info,self.subDirectories.count)//,images.count)
-            
+            os_log("-> %d subdirectories %d images", log: OSLog.imageLoad,type: .info,self.subDirectories.count,self.images.count)
         }
         catch {
             print("Error reading \(self.currentDirectory)")

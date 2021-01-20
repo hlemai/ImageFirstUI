@@ -17,19 +17,25 @@ public class ImageThumbnailLoader: ObservableObject
     
     /// queues
     /// TODO : remove or no public queue (used in tests)
-    public var uidispatchQueue = DispatchQueue.main
-    public var asyncQueue =  DispatchQueue.global(qos: .background)
+    var uidispatchQueue = DispatchQueue.main
+    var asyncQueue =  DispatchQueue.global(qos: .userInteractive)
     
     /// Image loader, send
+    @Published
     public private(set) var image: NSImage?
-    {
-        willSet
-        {
-            self.objectWillChange.send()
-        }
+    
+    public enum StateLoading {
+        case initial
+        case loading
+        case loaded
+        case error
     }
-    /// combine publisher (Subjet) that publish updates
-    public var objectWillChange = PassthroughSubject<Void, Never>()
+    
+    @Published
+    public var state:StateLoading = .initial
+    
+//    /// combine publisher (Subjet) that publish updates
+//    public var objectWillChange = PassthroughSubject<Void, Never>()
 
     /// construct a new ImageLoader
     public init( path: String)
@@ -70,7 +76,7 @@ public class ImageThumbnailLoader: ObservableObject
     private func loadImageFromDiskWith(fileName: String) -> NSImage? {
         let path = fileName;
         let size = CGSize(width: 100.0, height: 100.0)
-        os_log("try to load : %@ ", log: OSLog.imageLoad ,type: .debug,path)
+        os_log("  try to load : %@ ", log: OSLog.imageLoad ,type: .debug,path)
         if let image = downsample(imageAt: URL(fileURLWithPath: path), to: size, scale: 2) {
             image.resizingMode = .tile
             os_log("Thumbnal loaded: %@ ", log: OSLog.imageLoad ,type: .info,path)
@@ -87,37 +93,29 @@ public class ImageThumbnailLoader: ObservableObject
     ///     - Error image in case of probleme
     public func requestImage() -> Void {
         let imgPath = imagePath
-        os_log("request: %@ ", log: OSLog.imageLoad ,type: .debug,self.imagePath)
+        os_log("  request: %@ ", log: OSLog.imageLoad ,type: .debug,self.imagePath)
         if !loadImageFromCache() {
-            os_log("not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
-
-            let reading = NSImage(systemSymbolName: "arrow.3.trianglepath",accessibilityDescription: "loading")!
-            self.imgCache.set(forKey: imgPath, image: reading)
-            self.image=reading
-            os_log("push temp image in cache ", log: OSLog.imageLoad ,type: .debug)
-
-            let queue = asyncQueue
-            queue.async{
+            os_log("  not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
+            self.state = .loading
+            os_log("  change image state ", log: OSLog.imageLoad ,type: .debug)
+            asyncQueue.async{
                 [weak self] in
                     guard let self = self else {
-                        // Oups, i'm not existing yet
-                        ImageCache.getImageCache().cache.removeObject(forKey: NSString(string: imgPath))
-                        os_log("abord image in cache : %@", log: OSLog.imageLoad ,type: .debug,imgPath)
+                        // Oups, i'm not existing yet : remove temp object
                         return
                     }
                     let img = self.loadImageFromDiskWith(fileName: self.imagePath)
-                    self.uidispatchQueue.sync {
+                    self.uidispatchQueue.async {
                         if img != nil {
                             self.image=img
                             self.imgCache.set(forKey: self.imagePath, image: img!)
-                            os_log("push real image in cache ", log: OSLog.imageLoad ,type: .debug)
+                            self.state = .loaded
+                            os_log("  push real image in cache ", log: OSLog.imageLoad ,type: .debug)
                         }
                         else {
                             os_log("Fail to load image, push error image in cache ", log: OSLog.imageLoad ,type: .error)
-                            self.image=NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: "Error")
-                            self.imgCache.set(forKey: self.imagePath, image: self.image!)
+                            self.state = .error
                         }
-                        
                     }
             }
         }
@@ -129,6 +127,7 @@ public class ImageThumbnailLoader: ObservableObject
                 return false
             }
             image = cacheImage
+            state = .loaded
             return true
         }
 }
