@@ -30,7 +30,8 @@ final class ExplorerViewModel: ObservableObject {
     /// Title of the window
     @Published var title = "Pictures"
     /// directory containing images to display
-    @Published var currentDirectory = "/Users/hlemai/Pictures/" 
+    @Published var currentDirectory = "/Users/hlemai/Pictures/"
+    @Published var currentImagePath:String? = nil
     
     /// Force recurse explotation of currect directory
     @Published var includeSubDirectory:Bool = false {

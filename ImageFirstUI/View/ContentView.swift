@@ -17,11 +17,10 @@ struct ContentView: View {
     func refresh() {
         dirVModel.changeDirectory(dirVModel.currentDirectory)
     }
-    
+    @State var selection: Set<Int> = [0]
     var body: some View {
         NavigationView {
-            
-            List {
+            List(selection:self.$selection) {
                 /*
                     Section(header: Text("Favorites")) {
                         ForEach (dirVModel.directories,id: \.id) {  dir in
@@ -45,6 +44,7 @@ struct ContentView: View {
                     }
             }
             DispImgList()
+            
         }.navigationTitle(dirVModel.title)
         .navigationSubtitle(dirVModel.currentDirectory).toolbar(content: {
                 Toggle(isOn: $dirVModel.includeSubDirectory, label: {

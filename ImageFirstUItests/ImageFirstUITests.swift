@@ -40,14 +40,13 @@ class ImageFirstUITests: XCTestCase {
         let queue = DispatchQueue(label: "ImageLoaderTests")
         
         imgLoader.uidispatchQueue=queue
-        var imgicon : NSImage?
+        
         queue.async {
             // first time
             imgLoader.requestImage()
             // second time
             imgLoader.requestImage()
 //            XCTAssert(imgLoader.image?.size.height == 15.0)
-            imgicon = imgLoader.image
         }
         
         queue.sync {
@@ -58,16 +57,14 @@ class ImageFirstUITests: XCTestCase {
         queue.async {
             for i in 1...5 {
                 print(" ---\(i)")
-                //imgLoader.requestImage()
                 sleep(2)
-                if(imgLoader.image != imgicon) {
+                if(imgLoader.image != nil) {
                     break;
                 }
             }
             
             print("after loading")
             XCTAssert(imgLoader.image?.size.height==100)
-            XCTAssert(imgLoader.image != imgicon)
         }
         queue.sync {
             sleep(1)

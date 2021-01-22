@@ -10,26 +10,35 @@ import os.log
 /// combine class use to load a pictire and compute a
 public class ImageThumbnailLoader: ObservableObject
 {
-    /// image to load
-    private var imagePath: String
-    /// reference Image Cache singleton
-    private var imgCache = ImageCache.getImageCache()
-    
-    /// queues
-    /// TODO : remove or no public queue (used in tests)
-    var uidispatchQueue = DispatchQueue.main
-    var asyncQueue =  DispatchQueue.global(qos: .userInteractive)
-    
-    /// Image loader, send
-    @Published
-    public private(set) var image: NSImage?
-    
     public enum StateLoading {
         case initial
         case loading
         case loaded
         case error
     }
+    
+    enum Destination {
+        case thumbnail(CGSize)
+        case fullimage
+    }
+
+    /// image to load
+    private var imagePath: String?
+    /// reference Image Cache singleton
+    private var imgThumbnailCache = ImageCache.getImageCache()
+    
+    /// queues change are available for tests (in order to do test)
+    var uidispatchQueue = DispatchQueue.main
+    // TODO : parameter for slowing and less power consumption
+    var asyncQueue =  DispatchQueue.global(qos: .userInteractive)
+    
+    private let destination:Destination
+    private let iscachedtoThumbnail:Bool
+    
+    /// Image loader, send
+    @Published
+    public private(set) var image: NSImage?
+    
     
     @Published
     public var state:StateLoading = .initial
@@ -38,9 +47,16 @@ public class ImageThumbnailLoader: ObservableObject
 //    public var objectWillChange = PassthroughSubject<Void, Never>()
 
     /// construct a new ImageLoader
-    public init( path: String)
+    public init( path: String?, thumbnail : Bool = true, size:CGSize = CGSize(width: 100, height: 100))
     {
         self.imagePath = path
+        if thumbnail {
+            destination = .thumbnail(size)
+            iscachedtoThumbnail = true
+        } else {
+            destination = .fullimage
+            iscachedtoThumbnail = false
+        }
     }
 
     
@@ -73,16 +89,22 @@ public class ImageThumbnailLoader: ObservableObject
     }
     
     /// load filename and call downsample
-    private func loadImageFromDiskWith(fileName: String) -> NSImage? {
-        let path = fileName;
-        let size = CGSize(width: 100.0, height: 100.0)
-        os_log("  try to load : %@ ", log: OSLog.imageLoad ,type: .debug,path)
-        if let image = downsample(imageAt: URL(fileURLWithPath: path), to: size, scale: 2) {
-            image.resizingMode = .tile
-            os_log("Thumbnal loaded: %@ ", log: OSLog.imageLoad ,type: .info,path)
-            return image
+    private func loadImageFromDisk() -> NSImage? {
+    
+        os_log("  try to load : %@ ", log: OSLog.imageLoad ,type: .debug,imagePath!)
+        
+        switch destination {
+        case .thumbnail(let size):
+            if let image = downsample(imageAt: URL(fileURLWithPath: imagePath!), to: size, scale: 2) {
+                image.resizingMode = .tile
+                os_log("Thumbnal loaded: %@ ", log: OSLog.imageLoad ,type: .info,imagePath!)
+                return image
+            }
+
+        case .fullimage:
+            return NSImage(contentsOfFile: imagePath!)
         }
-        os_log("Fail to load: %@ ", log: OSLog.imageLoad ,type: .error,path)
+        os_log("Fail to load: %@ ", log: OSLog.imageLoad ,type: .error,imagePath!)
         return nil
     }
     
@@ -92,38 +114,48 @@ public class ImageThumbnailLoader: ObservableObject
     ///     - temporary loading icon during computation
     ///     - Error image in case of probleme
     public func requestImage() -> Void {
-        let imgPath = imagePath
-        os_log("  request: %@ ", log: OSLog.imageLoad ,type: .debug,self.imagePath)
-        if !loadImageFromCache() {
-            os_log("  not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
-            self.state = .loading
-            os_log("  change image state ", log: OSLog.imageLoad ,type: .debug)
-            asyncQueue.async{
-                [weak self] in
-                    guard let self = self else {
-                        // Oups, i'm not existing yet : remove temp object
-                        return
-                    }
-                    let img = self.loadImageFromDiskWith(fileName: self.imagePath)
-                    self.uidispatchQueue.async {
-                        if img != nil {
-                            self.image=img
-                            self.imgCache.set(forKey: self.imagePath, image: img!)
-                            self.state = .loaded
-                            os_log("  push real image in cache ", log: OSLog.imageLoad ,type: .debug)
-                        }
-                        else {
-                            os_log("Fail to load image, push error image in cache ", log: OSLog.imageLoad ,type: .error)
-                            self.state = .error
-                        }
-                    }
+        guard let imgPath = imagePath else {
+            return
+        }
+        os_log("  request: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
+        
+        if iscachedtoThumbnail {
+            if loadImageThumbnailFromCache() {
+                return
+            } else {
+                os_log("  not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
             }
         }
+        self.state = .loading
+        os_log("  change image state to loading ", log: OSLog.imageLoad ,type: .debug)
+        asyncQueue.async{
+            [weak self] in
+                guard let self = self else {
+                    // Oups, i'm not existing yet
+                    return
+                }
+                let img = self.loadImageFromDisk()
+                self.uidispatchQueue.async {
+                    if img != nil {
+                        self.image=img
+                        self.state = .loaded
+                        if self.iscachedtoThumbnail {
+                            self.imgThumbnailCache.set(forKey: imgPath, image: img!)
+                            os_log("  push real image in cache ", log: OSLog.imageLoad ,type: .debug)
+                        }
+                    }
+                    else {
+                        os_log("Fail to load image ", log: OSLog.imageLoad ,type: .error)
+                        self.state = .error
+                    }
+                }
+        }
     }
+
     
     /// if image is in cache, return true and set image
-    private func loadImageFromCache() -> Bool {
-            guard let cacheImage = imgCache.get(forKey: imagePath) else {
+    private func loadImageThumbnailFromCache() -> Bool {
+            guard let cacheImage = imgThumbnailCache.get(forKey: imagePath!) else {
                 return false
             }
             image = cacheImage
