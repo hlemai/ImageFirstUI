@@ -25,7 +25,7 @@ struct DirectoryViewModel : Hashable, Codable, Identifiable {
 /// View model to manage display of content of a directory
 /// Note :
 ///     images contains an array of PictureViewModel
-final class ExplorerViewModel: ObservableObject {
+final class ImageExplorerStore: ObservableObject {
     
     /// Title of the window
     @Published var title = "Pictures"
@@ -46,6 +46,7 @@ final class ExplorerViewModel: ObservableObject {
 
     /// Pictures to be displayes
     @Published var images: [PictureViewModel] = []
+    
     
     /// Construct a DirectoryViewModel
     init() {

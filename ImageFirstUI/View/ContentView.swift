@@ -9,14 +9,14 @@ import SwiftUI
 import os.log
 
 struct ContentView: View {
-    @EnvironmentObject var dirVModel: ExplorerViewModel
+    @EnvironmentObject var imageStore: ImageExplorerStore
     @State private var navBarHidden = false
     
     func changeDirectory() {
-        dirVModel.uiChangeDirectory()
+        imageStore.uiChangeDirectory()
     }
     func refresh() {
-        dirVModel.changeDirectory(dirVModel.currentDirectory)
+        imageStore.changeDirectory(imageStore.currentDirectory)
     }
     
     private func toggleSidebar() {
@@ -41,9 +41,9 @@ struct ContentView: View {
                         }
                     }*/
                     Section(header: Text("Subfolders")) {
-                        ForEach( dirVModel.subDirectories,id:\.id) { dir in
+                        ForEach( imageStore.subDirectories,id:\.id) { dir in
                             Button (action: {
-                                dirVModel.changeDirectory(dir.path)
+                                imageStore.changeDirectory(dir.path)
                             },
                                 label: {
                                     Label(dir.name,systemImage:"folder")
@@ -54,10 +54,10 @@ struct ContentView: View {
             }
 
             DispImgList()
-            FullImageView(path: dirVModel.currentImagePath)
+            FullImageView(path: imageStore.currentImagePath)
         }
-        .navigationTitle(dirVModel.title)
-        .navigationSubtitle(dirVModel.currentDirectory)
+        .navigationTitle(imageStore.title)
+        .navigationSubtitle(imageStore.currentDirectory)
         .toolbar {
             //Toggle Sidebar Button
             ToolbarItem(placement: .navigation){
@@ -66,7 +66,7 @@ struct ContentView: View {
                 })
             }
             ToolbarItem (placement: ToolbarItemPlacement.cancellationAction) {
-                Toggle(isOn: $dirVModel.includeSubDirectory, label: {
+                Toggle(isOn: $imageStore.includeSubDirectory, label: {
                         Text("Include sub directory")
                     }).toggleStyle(CheckboxToggleStyle())
             }
@@ -84,6 +84,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ExplorerViewModel(mockup:true)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+        ContentView().environmentObject(ImageExplorerStore(mockup:true)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
     }
 }

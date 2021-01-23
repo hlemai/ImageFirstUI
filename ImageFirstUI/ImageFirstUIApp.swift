@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct ImageFirstUIApp: App {
-    @StateObject private var modelData = ExplorerViewModel()
+    @StateObject private var imageStore = ImageExplorerStore()
         
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(modelData)
+                .environmentObject(imageStore)
 
         }
     }

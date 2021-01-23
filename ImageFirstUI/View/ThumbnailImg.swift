@@ -25,20 +25,20 @@ struct ThumbnailImg: View {
             Image(nsImage: imageLoader.image ?? NSImage(systemSymbolName: "tortoise", accessibilityDescription: "to load")!)
                 //.frame(width: 100.0, height: 100.0)
                 .shadow(radius: 50)
-                .scaledToFill().onAppear(perform: {
-                    os_log("  ThumbnailImg -- onAppear",log:OSLog.imageLoad,type:.debug)
-                })
+                .scaledToFill()
         }
     }
-    init( path:String)
+    init( path:String, thumbnailSize:Double)
     {
-        imageLoader = ImageAndThumbnailLoader(path: path)
+        let size = CGSize(width: thumbnailSize, height: thumbnailSize)
+        os_log(" request thumbnail %f size",log:OSLog.imageLoad,type:.debug,thumbnailSize)
+        imageLoader = ImageAndThumbnailLoader(path: path,thumbnail: true,size: size)
         imageLoader.requestImage()
     }
 }
 
 struct ThumbnailImg_Previews: PreviewProvider {
     static var previews: some View {
-        ThumbnailImg(path:  "/Users/hlemai/Pictures/Fond/_DSC5171.jpg")
+        ThumbnailImg(path:  "/Users/hlemai/Pictures/Fond/_DSC5171.jpg",thumbnailSize:200)
     }
 }

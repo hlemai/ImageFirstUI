@@ -119,13 +119,13 @@ public class ImageAndThumbnailLoader: ObservableObject
         }
         os_log("  request: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
         
-        if iscachedtoThumbnail {
-            if loadImageThumbnailFromCache() {
-                return
-            } else {
-                os_log("  not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
-            }
+        
+        if loadImageThumbnailFromCacheIfNeeded() {
+            return
+        } else {
+            os_log("  not in cache: %@ ", log: OSLog.imageLoad ,type: .debug,imgPath)
         }
+        
         self.state = .loading
         os_log("  change image state to loading ", log: OSLog.imageLoad ,type: .debug)
         asyncQueue.async{
@@ -139,10 +139,7 @@ public class ImageAndThumbnailLoader: ObservableObject
                     if img != nil {
                         self.image=img
                         self.state = .loaded
-                        if self.iscachedtoThumbnail {
-                            self.imgThumbnailCache.set(forKey: imgPath, image: img!)
-                            os_log("  push real image in cache ", log: OSLog.imageLoad ,type: .debug)
-                        }
+                        self.pushImageInCacheifNeeded(img!)
                     }
                     else {
                         os_log("Fail to load image ", log: OSLog.imageLoad ,type: .error)
@@ -151,16 +148,30 @@ public class ImageAndThumbnailLoader: ObservableObject
                 }
         }
     }
-
     
     /// if image is in cache, return true and set image
-    private func loadImageThumbnailFromCache() -> Bool {
-            guard let cacheImage = imgThumbnailCache.get(forKey: imagePath!) else {
+    private func loadImageThumbnailFromCacheIfNeeded() -> Bool {
+        
+        switch destination {
+        case .thumbnail(let size):
+            guard let cacheImage = imgThumbnailCache.get(path: imagePath!,size:size ) else {
                 return false
             }
             image = cacheImage
             state = .loaded
             return true
+        default:
+            return false
         }
+    }
+    private func pushImageInCacheifNeeded(_ img:NSImage) {
+        switch destination {
+        case .thumbnail(let size):
+            self.imgThumbnailCache.set(path: imagePath!,size : size, image: img)
+            os_log("  push real image in cache ", log: OSLog.imageLoad ,type: .debug)
+        default :
+            return
+        }
+    }
 }
 

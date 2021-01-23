@@ -12,26 +12,33 @@ import SwiftUI
 struct DispImgList: View {
     
     /// view model
-    @EnvironmentObject var dirVModel: ExplorerViewModel
+    @EnvironmentObject var imageStore: ImageExplorerStore
+    @State var thumbnailSize = 200.0
     
     /// columns definitions
-    let columns = [GridItem(.adaptive(minimum: 100.0, maximum: 300.0))]
+    var columns = [GridItem(.adaptive(minimum: 200, maximum: 1000.0))]
     
     var body: some View {
-        HSplitView {
+        ZStack(alignment: .bottomLeading) {
             ScrollView {
-                LazyVGrid(columns: columns,  spacing:20 ) {
-                    ForEach(dirVModel.images) { img in 
+                LazyVGrid(columns:
+                            [GridItem(.adaptive(minimum: CGFloat(thumbnailSize), maximum: 1000.0),  spacing:20 )]) {
+                    ForEach(imageStore.images) { img in 
                                 VStack {
-                                    ThumbnailImg(path : img.path)
+                                    ThumbnailImg(path : img.path,thumbnailSize: thumbnailSize)
                                     Text(img.name)
-                                }.onTapGesture {
-                                    dirVModel.currentImagePath = img.path
+                                }
+                                .padding()
+                                .onTapGesture {
+                                    imageStore.currentImagePath = img.path
                                 }
                         }
                     }
             }
-
+            ZoomSlider(zoomSize: $thumbnailSize)
+                .scaleEffect(0.4)
+                .background(Color(NSColor.underPageBackgroundColor))
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
         }
     }
 }
@@ -39,7 +46,7 @@ struct DispImgList: View {
 struct DispImgList_Previews: PreviewProvider {
     static var previews: some View {
         DispImgList()
-            .environmentObject(ExplorerViewModel(mockup: true))
+            .environmentObject(ImageExplorerStore(mockup: true))
         
     }
 }

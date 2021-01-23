@@ -7,6 +7,7 @@
 
 import XCTest
 import Foundation
+import SwiftUI
 @testable import ImageFirstUI
 
 class ImageFirstUITests: XCTestCase {
@@ -30,13 +31,13 @@ class ImageFirstUITests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         print("===== Testing Model")
-        let modelData = ExplorerViewModel(mockup: true)
+        let modelData = ImageExplorerStore(mockup: true)
         XCTAssert(modelData.images.count == 3)
     }
     
     func testImageLoader() throws {
         print("===== Testing image loader")
-        let imgLoader=ImageAndThumbnailLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg")
+        let imgLoader=ImageAndThumbnailLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg",thumbnail: true,size : CGSize(width:100,height:100))
         let queue = DispatchQueue(label: "ImageLoaderTests")
         
         imgLoader.uidispatchQueue=queue
@@ -70,6 +71,27 @@ class ImageFirstUITests: XCTestCase {
             sleep(1)
             print("End Tests")
         }
+    }
+    
+    func testCache() throws {
+        let cache = ImageCache.getImageCache()
+        let path =  "/Users/hlemai/Pictures/fond/DSC02560.jpg"
+        let size1:CGSize = CGSize(width: 100, height: 100)
+        let size2:CGSize = CGSize(width: 200, height: 200)
+        
+        let key1 = ImgCacheKey(path:path, size:size1)
+        let key2 = ImgCacheKey(path:path, size:size1)
+        let key3 = ImgCacheKey(path:path, size:size2)
+        XCTAssert(key1 == key2)
+        XCTAssert(key1 != key3)
+        
+        let img1 = NSImage(systemSymbolName:"folder", accessibilityDescription:"")!
+        let img2 = NSImage(systemSymbolName:"pencil", accessibilityDescription:"")!
+        cache.set(path:path,size:size1,image:img1)
+        cache.set(path:path,size:size2,image:img2)
+        let imgret = cache.get(path:path,size:size1)
+        XCTAssert(imgret==img1)
+        
     }
     
     func testslowDisk() throws {
@@ -130,7 +152,7 @@ class ImageFirstUITests: XCTestCase {
     func testPerformanceModel() throws {
         // This is an example of a performance test case.
         print("===== Testing image loader")
-        let  modelData = ExplorerViewModel(mockup: true)
+        let  modelData = ImageExplorerStore(mockup: true)
         measure {
             // Put the code you want to measure the time of here.
             modelData.changeDirectory("/Users/hlemai/Pictures/Fond/")
