@@ -36,7 +36,7 @@ class ImageFirstUITests: XCTestCase {
     
     func testImageLoader() throws {
         print("===== Testing image loader")
-        let imgLoader=ImageThumbnailLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg")
+        let imgLoader=ImageAndThumbnailLoader(path: "/Users/hlemai/Pictures/fond/DSC02560.jpg")
         let queue = DispatchQueue(label: "ImageLoaderTests")
         
         imgLoader.uidispatchQueue=queue
@@ -77,7 +77,7 @@ class ImageFirstUITests: XCTestCase {
         let queue = DispatchQueue(label: "ImageLoaderTests")
         var imgIcon:NSImage?=nil
         var images:[String]=[]
-        var imageLoaders: [ImageThumbnailLoader] = []
+        var imageLoaders: [ImageAndThumbnailLoader] = []
 
          queue.async {
             do {
@@ -98,7 +98,7 @@ class ImageFirstUITests: XCTestCase {
                 
                     
                 for file in images {
-                    let imgLoader = ImageThumbnailLoader(path:file)
+                    let imgLoader = ImageAndThumbnailLoader(path:file)
                     imgLoader.uidispatchQueue=queue;
                     imgLoader.asyncQueue = queue
                     imageLoaders.append(imgLoader)

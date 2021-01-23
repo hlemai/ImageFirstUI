@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FullImageView: View {
-    @ObservedObject private var imageLoader: ImageThumbnailLoader
+    @ObservedObject private var imageLoader: ImageAndThumbnailLoader
     
     var body: some View {
         switch (imageLoader.state)
@@ -29,7 +29,7 @@ struct FullImageView: View {
     }
     
     init( path:String?) {
-        imageLoader = ImageThumbnailLoader(path: path ,thumbnail: false)
+        imageLoader = ImageAndThumbnailLoader(path: path ,thumbnail: false)
         imageLoader.requestImage()
     }
 }

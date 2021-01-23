@@ -10,6 +10,7 @@ import os.log
 
 struct ContentView: View {
     @EnvironmentObject var dirVModel: ExplorerViewModel
+    @State private var navBarHidden = false
     
     func changeDirectory() {
         dirVModel.uiChangeDirectory()
@@ -17,6 +18,14 @@ struct ContentView: View {
     func refresh() {
         dirVModel.changeDirectory(dirVModel.currentDirectory)
     }
+    
+    private func toggleSidebar() {
+        #if os(iOS)
+        #else
+        NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+        #endif
+    }
+    
     @State var selection: Set<Int> = [0]
     var body: some View {
         NavigationView {
@@ -43,22 +52,33 @@ struct ContentView: View {
                         }
                     }
             }
+
             DispImgList()
-            
-        }.navigationTitle(dirVModel.title)
-        .navigationSubtitle(dirVModel.currentDirectory).toolbar(content: {
+            FullImageView(path: dirVModel.currentImagePath)
+        }
+        .navigationTitle(dirVModel.title)
+        .navigationSubtitle(dirVModel.currentDirectory)
+        .toolbar {
+            //Toggle Sidebar Button
+            ToolbarItem(placement: .navigation){
+                Button(action: toggleSidebar, label: {
+                    Image(systemName: "sidebar.left")
+                })
+            }
+            ToolbarItem (placement: ToolbarItemPlacement.cancellationAction) {
                 Toggle(isOn: $dirVModel.includeSubDirectory, label: {
-                    Text("Include sub directory")
-            }).toggleStyle(CheckboxToggleStyle())
-            Button(action:changeDirectory) {
-                Label("Change Directory",systemImage:"folder")
-                Text("Change Directory")
+                        Text("Include sub directory")
+                    }).toggleStyle(CheckboxToggleStyle())
             }
-            Button(action:refresh) {
-                Label("Change Directory",systemImage:"circle.dashed")
-                Text("Refresh")
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action:changeDirectory) {
+                    Label("Change Directory",systemImage:"folder")
+                    Text("Change Directory")
+                }
             }
-        })
+
+        }
+
     }
 }
 

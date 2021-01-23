@@ -10,7 +10,7 @@ import os.log
 
 /// view displaying an image
 struct ThumbnailImg: View {
-    @ObservedObject private var imageLoader: ImageThumbnailLoader
+    @ObservedObject private var imageLoader: ImageAndThumbnailLoader
     
     var body: some View {
         switch (imageLoader.state)
@@ -32,7 +32,7 @@ struct ThumbnailImg: View {
     }
     init( path:String)
     {
-        imageLoader = ImageThumbnailLoader(path: path)
+        imageLoader = ImageAndThumbnailLoader(path: path)
         imageLoader.requestImage()
     }
 }

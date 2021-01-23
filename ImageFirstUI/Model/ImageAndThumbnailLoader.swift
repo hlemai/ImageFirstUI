@@ -8,7 +8,7 @@ import Foundation
 import os.log
 
 /// combine class use to load a pictire and compute a
-public class ImageThumbnailLoader: ObservableObject
+public class ImageAndThumbnailLoader: ObservableObject
 {
     public enum StateLoading {
         case initial
