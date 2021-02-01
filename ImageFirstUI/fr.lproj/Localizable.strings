@@ -1,0 +1,10 @@
+/* 
+  main.strings
+  ImageFirstUI
+
+  Created by Hervé LEMAI on 01/02/2021.
+  
+*/
+"SubFolders" = "Sous dossiers";
+"IncludeSubDirs" = "Inclure les sous dossiers";
+"ChangeDirectory" = "Changer de dossier";

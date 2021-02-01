@@ -16,6 +16,7 @@
 		60A1EF6A259E34750079C077 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A1EF69259E34750079C077 /* Preview Assets.xcassets */; };
 		60A1EF74259E34950079C077 /* ImageExplorerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF73259E34950079C077 /* ImageExplorerStore.swift */; };
 		60A1EF77259E37E30079C077 /* DispImgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF76259E37E30079C077 /* DispImgList.swift */; };
+		60B9172F25C830B20089C95A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60B9173125C830B20089C95A /* Localizable.strings */; };
 		60C57CF325A230AD00C5DA58 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C57CF225A230AD00C5DA58 /* OSLog.swift */; };
 		60C57CF625A239C300C5DA58 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C57CF525A239C300C5DA58 /* FileManager.swift */; };
 		60C57CF925A252D300C5DA58 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 60C57CF825A252D300C5DA58 /* README.md */; };
@@ -49,12 +50,15 @@
 		60A1EF6C259E34750079C077 /* ImageFirstUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageFirstUI.entitlements; sourceTree = "<group>"; };
 		60A1EF73259E34950079C077 /* ImageExplorerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExplorerStore.swift; sourceTree = "<group>"; };
 		60A1EF76259E37E30079C077 /* DispImgList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispImgList.swift; sourceTree = "<group>"; };
+		60B9173025C830B20089C95A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		60B9173425C830B90089C95A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		60C57CF225A230AD00C5DA58 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
 		60C57CF525A239C300C5DA58 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		60C57CF825A252D300C5DA58 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		60D3072725A09A4500890F78 /* ImageAndThumbnailLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAndThumbnailLoader.swift; sourceTree = "<group>"; };
 		60D3072A25A0ABFD00890F78 /* ThumbnailImg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailImg.swift; sourceTree = "<group>"; };
 		60D3072D25A0D37F00890F78 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		60FECD1D25C8A7480018417D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,7 @@
 				60A1EF62259E34710079C077 /* ImageFirstUIApp.swift */,
 				60A1EF66259E34750079C077 /* Assets.xcassets */,
 				60A1EF6B259E34750079C077 /* Info.plist */,
+				60B9173125C830B20089C95A /* Localizable.strings */,
 				60A1EF6C259E34750079C077 /* ImageFirstUI.entitlements */,
 				60A1EF68259E34750079C077 /* Preview Content */,
 				60C57CF225A230AD00C5DA58 /* OSLog.swift */,
@@ -194,7 +199,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1230;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					6015B20625A3564500FDBF5C = {
 						CreatedOnToolsVersion = 12.3;
@@ -211,6 +216,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
+				de,
 				Base,
 			);
 			mainGroup = 60A1EF56259E34710079C077;
@@ -237,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60C57CF925A252D300C5DA58 /* README.md in Resources */,
+				60B9172F25C830B20089C95A /* Localizable.strings in Resources */,
 				60A1EF6A259E34750079C077 /* Preview Assets.xcassets in Resources */,
 				60A1EF67259E34750079C077 /* Assets.xcassets in Resources */,
 			);
@@ -280,6 +288,19 @@
 			targetProxy = 6015B20C25A3564500FDBF5C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		60B9173125C830B20089C95A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60B9173025C830B20089C95A /* fr */,
+				60B9173425C830B90089C95A /* en */,
+				60FECD1D25C8A7480018417D /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		6015B20F25A3564500FDBF5C /* Debug */ = {
@@ -330,6 +351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -361,6 +383,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -391,6 +414,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -422,6 +446,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -112,7 +112,8 @@ final class ImageExplorerStore: ObservableObject {
         let fm = FileManager.default
         do {
             let urldir = URL(fileURLWithPath: currentDirectory)
-            title = urldir.lastPathComponent
+            title = fm.displayName(atPath: urldir.absoluteString)
+            
             let subs = try fm.getListSubDirectories(from: urldir)
             subDirectories.removeAll()
             subDirectories.append(DirectoryViewModel( name:".",path:urldir.path))

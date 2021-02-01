@@ -40,7 +40,7 @@ struct ContentView: View {
                                 })
                         }
                     }*/
-                    Section(header: Text("Subfolders")) {
+                Section(header: Text(LocalizedStringKey("SubFolders"))) {
                         ForEach( imageStore.subDirectories,id:\.id) { dir in
                             Button (action: {
                                 imageStore.changeDirectory(dir.path)
@@ -67,13 +67,13 @@ struct ContentView: View {
             }
             ToolbarItem (placement: ToolbarItemPlacement.cancellationAction) {
                 Toggle(isOn: $imageStore.includeSubDirectory, label: {
-                        Text("Include sub directory")
+                        Text("IncludeSubDirs")
                     }).toggleStyle(CheckboxToggleStyle())
             }
             ToolbarItem(placement: .cancellationAction) {
                 Button(action:changeDirectory) {
-                    Label("Change Directory",systemImage:"folder")
-                    Text("Change Directory")
+                    Label("ChangeDirectory",systemImage:"folder")
+                    Text("ChangeDirectory")
                 }
             }
 
@@ -85,5 +85,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environmentObject(ImageExplorerStore(mockup:true)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            .environment(\.locale, .init(identifier: "de"))
     }
 }
