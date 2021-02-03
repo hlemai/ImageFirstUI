@@ -47,6 +47,8 @@ final class ImageExplorerStore: ObservableObject {
     /// Pictures to be displayes
     @Published var images: [PictureViewModel] = []
     
+    @Published var userSettings = UserSettings()
+    
     
     /// Construct a DirectoryViewModel
     init() {

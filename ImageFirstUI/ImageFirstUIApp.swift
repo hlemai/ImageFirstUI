@@ -17,5 +17,11 @@ struct ImageFirstUIApp: App {
                 .environmentObject(imageStore)
 
         }
+        Settings {
+            SettingsView().environmentObject(imageStore)
+        }
+
     }
+    
+
 }
