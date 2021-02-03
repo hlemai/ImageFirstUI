@@ -16,7 +16,7 @@ struct SettingsView: View {
             Text("Preview Thumbnail Preferences").font(.headline)
             HStack {
                 Text("Thumbnail Size")
-                ZoomSlider(zoomSize: $thumbnailSize).frame( maxWidth: 300)
+                ZoomSlider(thumbnailSize: $thumbnailSize).frame( maxWidth: 300)
                 Text(String(format: "%.2f", thumbnailSize))
             }
         }.padding()

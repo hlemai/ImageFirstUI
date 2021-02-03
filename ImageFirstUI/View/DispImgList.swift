@@ -13,6 +13,7 @@ struct DispImgList: View {
     
     /// view model
     @ObservedObject var imageStore: ImageExplorerStore
+    /// Thumbnail size, store in NSUsers Settings
     @AppStorage("Thumbnail Size") var thumbnailSize:Double = 100
 
     /// columns definitions

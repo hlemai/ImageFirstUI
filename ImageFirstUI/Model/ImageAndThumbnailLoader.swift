@@ -7,16 +7,17 @@ import Combine
 import Foundation
 import os.log
 
-/// combine class use to load a pictire and compute a
+/// combine class use to load a pictire and compute thumbnails
 public class ImageAndThumbnailLoader: ObservableObject
 {
+    /// loading state from initial to loaded or error
     public enum StateLoading {
         case initial
         case loading
         case loaded
         case error
     }
-    
+    /// same loader is used to compute a thumbnail or load the full image.
     enum Destination {
         case thumbnail(CGSize)
         case fullimage
@@ -35,17 +36,13 @@ public class ImageAndThumbnailLoader: ObservableObject
     private let destination:Destination
     private let iscachedtoThumbnail:Bool
     
-    /// Image loader, send
+    /// Main Property (image to display in UI)
     @Published
     public private(set) var image: NSImage?
-    
     
     @Published
     public var state:StateLoading = .initial
     
-//    /// combine publisher (Subjet) that publish updates
-//    public var objectWillChange = PassthroughSubject<Void, Never>()
-
     /// construct a new ImageLoader
     public init( path: String?, thumbnail : Bool = true, size:CGSize = CGSize(width: 100, height: 100))
     {
@@ -60,7 +57,7 @@ public class ImageAndThumbnailLoader: ObservableObject
     }
 
     
-    /// downsample
+    /// downsample using ImageIO (Fast API)
     /// parameters :
     ///     - imageat : url of the image
     ///     - to : size of image
@@ -88,7 +85,7 @@ public class ImageAndThumbnailLoader: ObservableObject
         return NSImage(cgImage: downsampledImage,size: NSSize(width: pointSize.width, height: pointSize.height))
     }
     
-    /// load filename and call downsample
+    /// load file and call downsample
     private func loadImageFromDisk() -> NSImage? {
     
         os_log("  try to load : %@ ", log: OSLog.imageLoad ,type: .debug,imagePath!)
@@ -108,11 +105,10 @@ public class ImageAndThumbnailLoader: ObservableObject
         return nil
     }
     
-    /// Load and Comptute image Thumbnail
+    /// Load and Compute image Thumbnail
     /// Attention :
     ///     - use asynchronous queue
-    ///     - temporary loading icon during computation
-    ///     - Error image in case of probleme
+    ///     - Error status
     public func requestImage() -> Void {
         guard let imgPath = imagePath else {
             return
@@ -128,6 +124,7 @@ public class ImageAndThumbnailLoader: ObservableObject
         
         self.state = .loading
         os_log("  change image state to loading ", log: OSLog.imageLoad ,type: .debug)
+        // goback to UI queue to store the image
         asyncQueue.async{
             [weak self] in
                 guard let self = self else {
@@ -164,6 +161,7 @@ public class ImageAndThumbnailLoader: ObservableObject
             return false
         }
     }
+    /// manage thumbnail Cache
     private func pushImageInCacheifNeeded(_ img:NSImage) {
         switch destination {
         case .thumbnail(let size):

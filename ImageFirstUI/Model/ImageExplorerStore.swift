@@ -47,14 +47,12 @@ final class ImageExplorerStore: ObservableObject {
     /// Pictures to be displayes
     @Published var images: [PictureViewModel] = []
     
-    //@Published var userSettings = UserSettings()
     
-    
-    /// Construct a DirectoryViewModel
+
     init() {
         internalInit()
     }
-    /// Construct a DirectoryViewModel
+    
     /// Parameters :
     ///     - mockup : Bool to fill data with mockupdata for testing purpose
     init( mockup:Bool) {
@@ -75,6 +73,7 @@ final class ImageExplorerStore: ObservableObject {
         currentDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Pictures", isDirectory: true).path + "/"
         LoadImagesAndSubDIr()
     }
+    
     /// call UI to choose a new directory
     public func uiChangeDirectory() {
         let dialog = NSOpenPanel();
@@ -108,7 +107,7 @@ final class ImageExplorerStore: ObservableObject {
         LoadImagesAndSubDIr()
     }
 
-    /// private methode that fill array and title
+    /// private methode that fill arrays and titles
     private func LoadImagesAndSubDIr() {
         os_log("Loading %@ "	, log: OSLog.imageLoad ,type: .info,self.currentDirectory)
         let fm = FileManager.default

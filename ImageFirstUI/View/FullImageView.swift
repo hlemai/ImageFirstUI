@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
-
+/// view displaying a whole image
 struct FullImageView: View {
     @ObservedObject private var imageLoader: ImageAndThumbnailLoader
     
     var body: some View {
+        // managing loading state
         switch (imageLoader.state)
         {
         case .initial :
@@ -27,7 +28,9 @@ struct FullImageView: View {
                 .scaledToFit()
         }
     }
-    
+    /// new Image View
+    /// parameter :
+    /// -   path : path of the image
     init( path:String?) {
         imageLoader = ImageAndThumbnailLoader(path: path ,thumbnail: false)
         imageLoader.requestImage()

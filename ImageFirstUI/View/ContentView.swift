@@ -8,17 +8,17 @@
 import SwiftUI
 import os.log
 
+/// main view with toolbar
 struct ContentView: View {
     @StateObject var imageStore: ImageExplorerStore = ImageExplorerStore()
     @State private var navBarHidden = false
-    
+
+    /// response to button changeDirectory
     func changeDirectory() {
         imageStore.uiChangeDirectory()
     }
-    func refresh() {
-        imageStore.changeDirectory(imageStore.currentDirectory)
-    }
-    
+
+    /// UIKit function to hide side bar
     private func toggleSidebar() {
         #if os(iOS)
         #else

@@ -7,22 +7,29 @@
 
 import SwiftUI
 
-
+/// small view with a slider to fix thumbnail size
 struct ZoomSlider: View {
-    @Binding var zoomSize:Double
+    
+    /// thumbnail size in pixel
+    @Binding var thumbnailSize:Double
+    /// minimum size of thumbnail
     let min = 100.0
+    /// maximum size of thumbnail
     let max = 500.0
+    /// increment step 
     let step = 50.0
     @State var leftbackColor = Color.gray.opacity(0.0)
     @State var rightbackColor = Color.gray.opacity(0.0)
     
+    /// minus step to slider
     func decZoom() {
-        zoomSize -= step
-        if zoomSize<min {zoomSize = min}
+        thumbnailSize -= step
+        if thumbnailSize<min {thumbnailSize = min}
     }
+    /// add step to slider
     func incZoom() {
-        zoomSize += step
-        if zoomSize>max {zoomSize = max}
+        thumbnailSize += step
+        if thumbnailSize>max {thumbnailSize = max}
     }
     var body : some View {
         HStack {
@@ -35,7 +42,7 @@ struct ZoomSlider: View {
                 if st {leftbackColor=Color.gray.opacity(80.0)}
                 else {leftbackColor=Color.gray.opacity(0)}
             })
-            Slider(value: $zoomSize, in: min...max)
+            Slider(value: $thumbnailSize, in: min...max)
             Button(action: incZoom) {
                 Image(systemName: "plus")
                     .scaledToFit()
@@ -54,6 +61,6 @@ struct ZoomSlider_Previews: PreviewProvider {
     @State var zoom = 200.0
     
     static var previews: some View {
-        ZoomSlider(zoomSize: .constant(200.0))
+        ZoomSlider(thumbnailSize: .constant(200.0))
     }
 }

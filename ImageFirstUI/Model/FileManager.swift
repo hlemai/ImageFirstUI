@@ -7,22 +7,9 @@
 import Foundation
 import SwiftUI
 
+/// Extension on FileManager usefull to get List of image file and subdirectories
 extension FileManager {
-    /*
-    func getListOfDocument(from url: URL, id: String) -> [URL] {
-        do {
-            let directoryContents = try FileManager.default.contentsOfDirectory(at: url.appendingPathComponent(id), includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-            let filterById = directoryContents.filter({ $0.absoluteString.contains(id) })
-            let doc = try filterById.filter { (url) -> Bool in
-                let ids = try url.resourceValues(forKeys: [URLResourceKey.typeIdentifierKey]).typeIdentifier
-                let typeIds = ids! as CFString
-                return UTTypeConformsTo(typeIds, kUTTypePDF) || UTTypeConformsTo(typeIds, kUTTypeRTF) || UTTypeConformsTo(typeIds, "com.microsoft.word.doc" as CFString) || UTTypeConformsTo(typeIds, "org.openxmlformats.wordprocessingml.document" as CFString)
-            }
-            return doc
-        } catch {
-            return []
-        }
-    }*/
+
     /// Get list of files filtered on image
     /// parameters :
     ///     - from : url of the folder containing pictures
@@ -36,7 +23,6 @@ extension FileManager {
             else {
                 options = [.skipsHiddenFiles,.skipsSubdirectoryDescendants]
             }
-            
             let directoryContents =  FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: options,errorHandler: nil)
             let img = try directoryContents?.filter { (it) -> Bool in
                 let url = it as? URL
@@ -48,13 +34,16 @@ extension FileManager {
             return img!
         }
     }
-    
+    /// get List of sub directories
+    /// parameters :
+    ///     - from : url of the folder
     func getListSubDirectories(from url: URL) throws -> [URL] {
         let subDirs = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsSubdirectoryDescendants,.skipsHiddenFiles,.skipsPackageDescendants]).filter {url in return url.hasDirectoryPath}
         return subDirs
     }
     
 
+    /// not used, to be tested.
     func thumbnail(from url: URL, placeholder: NSImage? = nil) -> NSImage? {
         do {
             let thumbnailDictionary = try url.promisedItemResourceValues(forKeys: [URLResourceKey.thumbnailDictionaryKey]).thumbnailDictionary
