@@ -9,16 +9,15 @@ import SwiftUI
 
 @main
 struct ImageFirstUIApp: App {
-    @StateObject private var imageStore = ImageExplorerStore()
+    //@StateObject private var imageStore = ImageExplorerStore()
         
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(imageStore)
 
         }
         Settings {
-            SettingsView().environmentObject(imageStore)
+            SettingsView()
         }
 
     }

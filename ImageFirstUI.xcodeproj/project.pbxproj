@@ -16,7 +16,6 @@
 		60A1EF6A259E34750079C077 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A1EF69259E34750079C077 /* Preview Assets.xcassets */; };
 		60A1EF74259E34950079C077 /* ImageExplorerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF73259E34950079C077 /* ImageExplorerStore.swift */; };
 		60A1EF77259E37E30079C077 /* DispImgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A1EF76259E37E30079C077 /* DispImgList.swift */; };
-		60ADDBD125C9F97300F927F5 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60ADDBD025C9F97300F927F5 /* UserSettings.swift */; };
 		60AE8B3B25C9EC87007C0DA0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AE8B3A25C9EC87007C0DA0 /* SettingsView.swift */; };
 		60B9172F25C830B20089C95A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60B9173125C830B20089C95A /* Localizable.strings */; };
 		60C57CF325A230AD00C5DA58 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C57CF225A230AD00C5DA58 /* OSLog.swift */; };
@@ -41,6 +40,8 @@
 		6015B20725A3564500FDBF5C /* ImageFirstUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFirstUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6015B20925A3564500FDBF5C /* ImageFirstUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFirstUITests.swift; sourceTree = "<group>"; };
 		6015B20B25A3564500FDBF5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60458E2625CAEF69007D1E60 /* UI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UI.png; sourceTree = "<group>"; };
+		60458E2725CAF008007D1E60 /* pref.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref.png; sourceTree = "<group>"; };
 		606140C125B831740063AD1D /* FullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageView.swift; sourceTree = "<group>"; };
 		6094AD7925BC8394001A6D12 /* ZoomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomSlider.swift; sourceTree = "<group>"; };
 		60A1EF5F259E34710079C077 /* ImageFirstUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFirstUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +53,6 @@
 		60A1EF6C259E34750079C077 /* ImageFirstUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageFirstUI.entitlements; sourceTree = "<group>"; };
 		60A1EF73259E34950079C077 /* ImageExplorerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExplorerStore.swift; sourceTree = "<group>"; };
 		60A1EF76259E37E30079C077 /* DispImgList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispImgList.swift; sourceTree = "<group>"; };
-		60ADDBD025C9F97300F927F5 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		60AE8B3A25C9EC87007C0DA0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		60B9173025C830B20089C95A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		60B9173425C830B90089C95A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -112,14 +112,23 @@
 				60D3072725A09A4500890F78 /* ImageAndThumbnailLoader.swift */,
 				60D3072D25A0D37F00890F78 /* ImageCache.swift */,
 				60C57CF525A239C300C5DA58 /* FileManager.swift */,
-				60ADDBD025C9F97300F927F5 /* UserSettings.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		60458E2325CAEF0D007D1E60 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				60458E2725CAF008007D1E60 /* pref.png */,
+				60458E2625CAEF69007D1E60 /* UI.png */,
+			);
+			path = Docs;
 			sourceTree = "<group>";
 		};
 		60A1EF56259E34710079C077 = {
 			isa = PBXGroup;
 			children = (
+				60458E2325CAEF0D007D1E60 /* Docs */,
 				60C57CF825A252D300C5DA58 /* README.md */,
 				60A1EF61259E34710079C077 /* ImageFirstUI */,
 				6015B20825A3564500FDBF5C /* ImageFirstUITests */,
@@ -275,7 +284,6 @@
 				60A1EF65259E34710079C077 /* ContentView.swift in Sources */,
 				60A1EF77259E37E30079C077 /* DispImgList.swift in Sources */,
 				60C57CF325A230AD00C5DA58 /* OSLog.swift in Sources */,
-				60ADDBD125C9F97300F927F5 /* UserSettings.swift in Sources */,
 				606140C225B831740063AD1D /* FullImageView.swift in Sources */,
 				60D3072825A09A4500890F78 /* ImageAndThumbnailLoader.swift in Sources */,
 				60A1EF63259E34710079C077 /* ImageFirstUIApp.swift in Sources */,

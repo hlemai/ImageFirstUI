@@ -9,7 +9,7 @@ import SwiftUI
 import os.log
 
 struct ContentView: View {
-    @EnvironmentObject var imageStore: ImageExplorerStore
+    @StateObject var imageStore: ImageExplorerStore = ImageExplorerStore()
     @State private var navBarHidden = false
     
     func changeDirectory() {
@@ -30,16 +30,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(selection:self.$selection) {
-                /*
-                    Section(header: Text("Favorites")) {
-                        ForEach (dirVModel.directories,id: \.id) {  dir in
-                            NavigationLink(
-                                destination: DispImgList(),
-                                label: {
-                                    Label(dir.name,systemImage:"star")
-                                })
-                        }
-                    }*/
                 Section(header: Text(LocalizedStringKey("SubFolders"))) {
                         ForEach( imageStore.subDirectories,id:\.id) { dir in
                             Button (action: {
@@ -53,7 +43,7 @@ struct ContentView: View {
                     }
             }
 
-            DispImgList()
+            DispImgList(imageStore: imageStore)
             FullImageView(path: imageStore.currentImagePath)
         }
         .navigationTitle(imageStore.title)
@@ -84,7 +74,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ImageExplorerStore(mockup:true)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+        ContentView(imageStore: ImageExplorerStore(mockup: true))
             .environment(\.locale, .init(identifier: "en"))
     }
 }

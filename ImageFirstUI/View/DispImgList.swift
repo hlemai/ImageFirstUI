@@ -12,7 +12,8 @@ import SwiftUI
 struct DispImgList: View {
     
     /// view model
-    @EnvironmentObject var imageStore: ImageExplorerStore
+    @ObservedObject var imageStore: ImageExplorerStore
+    @AppStorage("Thumbnail Size") var thumbnailSize:Double = 100
 
     /// columns definitions
     var columns = [GridItem(.adaptive(minimum: 200, maximum: 1000.0))]
@@ -21,10 +22,10 @@ struct DispImgList: View {
         ZStack(alignment: .bottomLeading) {
             ScrollView {
                 LazyVGrid(columns:
-                            [GridItem(.adaptive(minimum: CGFloat(imageStore.userSettings.thumbnailSize), maximum: 1000.0),  spacing:20 )]) {
+                            [GridItem(.adaptive(minimum: CGFloat(thumbnailSize), maximum: 1000.0),  spacing:20 )]) {
                     ForEach(imageStore.images) { img in 
                                 VStack {
-                                    ThumbnailImg(path : img.path,thumbnailSize: imageStore.userSettings.thumbnailSize)
+                                    ThumbnailImg(path : img.path,thumbnailSize: thumbnailSize)
                                     Text(img.name)
                                 }
                                 .padding()
@@ -40,8 +41,7 @@ struct DispImgList: View {
 
 struct DispImgList_Previews: PreviewProvider {
     static var previews: some View {
-        DispImgList()
-            .environmentObject(ImageExplorerStore(mockup: true))
+        DispImgList(imageStore: ImageExplorerStore(mockup: true))
         
     }
 }
